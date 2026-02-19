@@ -1,0 +1,48 @@
+table 'PIB Mensal'
+	lineageTag: 685498bc-8bff-4578-a849-0a88c4eadb3b
+
+	column 'Data PIB'
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 7701cc48-5756-4441-83a4-5f489075dca9
+		summarizeBy: none
+		sourceColumn: Data PIB
+
+		variation Variation
+			isDefault
+			relationship: f2649b7e-21b6-46b0-9590-a9642bb684b9
+			defaultHierarchy: LocalDateTable_c2306d03-7106-48ae-962b-2c2d7ac07878.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Valor PIB'
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: a72ca3dd-3b70-4c91-88f9-bf37d3d581e3
+		summarizeBy: average
+		sourceColumn: Valor PIB
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	partition 'PIB Mensal' = m
+		mode: import
+		source =
+				let
+				    Source = OData.Feed("http://www.ipeadata.gov.br/api/odata4/Metadados('BM12_PIB12')/Valores", null, [Implementation="2.0"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"VALDATA", "VALVALOR"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"VALDATA", type date}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type",{{"VALVALOR", each Number.Round(_, 2), type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Rounded Off",{{"VALDATA", "Data PIB"}, {"VALVALOR", "Valor PIB"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

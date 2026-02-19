@@ -1,0 +1,87 @@
+table Medidas
+	lineageTag: 8ffc2ec1-59eb-4965-a227-1f333418fc7b
+
+	measure 'Alerta Risco' = ```
+			
+			VAR inflacao = AVERAGE('IPCA Geral Mensal (Taxa de Variação)'[Valor IPCA])
+			VAR bolsa = AVERAGE('Ibovespa Mensal (Fechamento)'[Valor IBOVESPA])
+			RETURN
+			    IF(inflacao > 0.06 && bolsa < 100000, "⚠️ Risco de fuga de capital", "✅ Estável")
+			
+			```
+		lineageTag: cae43a2c-cc38-45b7-af62-6616b5443f32
+
+	measure 'PIB Atual' =
+			
+			CALCULATE (
+			    MAX('PIB Mensal'[Valor PIB]),
+			    FILTER (
+			        'PIB Mensal',
+			        'PIB Mensal'[Data PIB] = MAX('PIB Mensal'[Data PIB])
+			    )
+			)
+		lineageTag: 20c6ff3b-9112-419d-9942-f1baf9911af2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'IPCA Atual' =
+			
+			CALCULATE (
+			    MAX('IPCA Geral Mensal (Taxa de Variação)'[Valor IPCA]),
+			    FILTER (
+			        'IPCA Geral Mensal (Taxa de Variação)',
+			        'IPCA Geral Mensal (Taxa de Variação)'[Data IPCA] = MAX('IPCA Geral Mensal (Taxa de Variação)'[Data IPCA])
+			    )
+			)
+		lineageTag: 20d47788-53f3-4ab6-8abf-dea9e0f3c82f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'IBOVESPA Atual' = ```
+			
+			CALCULATE (
+			    MAX('Ibovespa Mensal (Fechamento)'[Valor IBOVESPA]),
+			    FILTER (
+			        'Ibovespa Mensal (Fechamento)',
+			        'Ibovespa Mensal (Fechamento)'[Data IBOVESPA] = MAX('Ibovespa Mensal (Fechamento)'[Data IBOVESPA])
+			    )
+			)
+			
+			```
+		lineageTag: cc2a564b-21ac-4e12-9299-279ba159cf54
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'IDH Médio Atual' = ```
+			
+			CALCULATE (
+			    AVERAGE('IDHM Demográfico (1970-2021)'[Valor IDHM]),
+			    FILTER (
+			        'IDHM Demográfico (1970-2021)',
+			        'IDHM Demográfico (1970-2021)'[Data IDHM] = MAX('IDHM Demográfico (1970-2021)'[Data IDHM])
+			    )
+			)
+			
+			```
+		lineageTag: 92535a50-546b-4079-9848-0ea944ce30a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: a1f2680d-9e98-44ca-a5e3-4a5bdcdaca73
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = d8895991f6b2442c98669f5067a6c4af
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -1,0 +1,51 @@
+table 'IDHM Demográfico (1970-2021)'
+	lineageTag: 09535b85-b3a1-4ecf-9436-1f5f1a1826dc
+
+	column 'Data IDHM'
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 17f87d69-29f4-466d-931a-f878e162baac
+		summarizeBy: none
+		sourceColumn: Data IDHM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Valor IDHM'
+		dataType: double
+		formatString: 0.000
+		lineageTag: be62d2e5-4911-4a5c-bb5d-de0a116e1116
+		summarizeBy: average
+		sourceColumn: Valor IDHM
+
+		annotation SummarizationSetBy = User
+
+	column 'Cd Município IDHM'
+		dataType: int64
+		formatString: 0
+		lineageTag: d89e6e7f-5b79-416c-bc9b-9081e26641dd
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Cd Município IDHM
+
+		annotation SummarizationSetBy = User
+
+	partition 'IDHM Demográfico (1970-2021)' = m
+		mode: import
+		source =
+				let
+				    Source = OData.Feed("http://www.ipeadata.gov.br/api/odata4/Metadados('IDHM')/Valores", null, [Implementation="2.0"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"VALDATA", "VALVALOR", "TERCODIGO"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"VALDATA", type date}, {"TERCODIGO", Int64.Type}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type",{{"VALVALOR", each Number.Round(_, 3), type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Rounded Off",{{"VALDATA", "Data IDHM"}, {"VALVALOR", "Valor IDHM"}, {"TERCODIGO", "Cd Município IDHM"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

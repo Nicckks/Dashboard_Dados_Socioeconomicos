@@ -1,0 +1,151 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 313.45549987616937,
+        "y": 1.25
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 414.54527400000006
+          },
+          "nodeIndex": "Ibovespa Mensal (Fechamento)",
+          "nodeLineageTag": "368dc6dd-b8a0-4623-a6f4-8a4d685ca8c7",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 731.12114905688827
+          },
+          "nodeIndex": "PIB Mensal",
+          "nodeLineageTag": "685498bc-8bff-4578-a849-0a88c4eadb3b",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "IPCA Geral Mensal (Taxa de Variação)",
+          "nodeLineageTag": "5750464a-fcf5-449a-b525-0f51b45ba5f3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 473.77232040851368,
+            "y": 413.80933726617212
+          },
+          "nodeIndex": "Calendário Mensal",
+          "nodeLineageTag": "8c81fdb0-320b-4ac0-9f72-2a7e080f8d75",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 921.08594187616893,
+            "y": 413.924192700581
+          },
+          "nodeIndex": "IDHM Demográfico (1970-2021)",
+          "nodeLineageTag": "09535b85-b3a1-4ecf-9436-1f5f1a1826dc",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1199.7712588761694,
+            "y": 157.14106108145563
+          },
+          "nodeIndex": "Metadados dos Territórios (IDHM)",
+          "nodeLineageTag": "18c58c9a-5a01-46be-b18b-02cd8a055ff4",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 919.440159,
+            "y": 0
+          },
+          "nodeIndex": "IPCA Mensal por Setor",
+          "nodeLineageTag": "80740a3c-be22-4ad0-95cf-ec35ade25d61",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 916.35902470545,
+            "y": 765.66297770058122
+          },
+          "nodeIndex": "Rendimento Médio Mensal por Setor",
+          "nodeLineageTag": "6095a2cf-0b0a-45f3-bc8d-4cecc9628d48",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1272.9554998761694,
+            "y": 570.89379752844411
+          },
+          "nodeIndex": "municipios",
+          "nodeLineageTag": "6b9f47b7-1fe0-4885-bd5f-c96b47d617a5",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1556.9554998761694,
+            "y": 365.56057452844414
+          },
+          "nodeIndex": "Medidas",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 10
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 80,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

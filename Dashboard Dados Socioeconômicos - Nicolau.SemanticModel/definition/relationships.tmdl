@@ -1,0 +1,62 @@
+relationship 8865285b-5e66-4fa0-bdbd-888909255174
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Ibovespa Mensal (Fechamento)'.'Data IBOVESPA'
+	toColumn: LocalDateTable_30a163e8-6840-4f7c-b64b-0350a6a74279.Date
+
+relationship ba10a862-0d4d-4228-8a92-65d251e683a1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'IPCA Geral Mensal (Taxa de Variação)'.'Data IPCA'
+	toColumn: LocalDateTable_a12f93fb-1ce8-4751-845f-b7f8ab4b75d8.Date
+
+relationship f2649b7e-21b6-46b0-9590-a9642bb684b9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PIB Mensal'.'Data PIB'
+	toColumn: LocalDateTable_c2306d03-7106-48ae-962b-2c2d7ac07878.Date
+
+relationship 33f7a383-f350-13d4-3730-6fb2510fec9b
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Calendário Mensal'.Data
+	toColumn: 'IPCA Geral Mensal (Taxa de Variação)'.'Data IPCA'
+
+relationship 07cb3472-2125-9ac0-c88c-bad1b47fe257
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Calendário Mensal'.Data
+	toColumn: 'Ibovespa Mensal (Fechamento)'.'Data IBOVESPA'
+
+relationship c62315cb-3de6-ffcf-69ce-d49100f394d5
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Calendário Mensal'.Data
+	toColumn: 'PIB Mensal'.'Data PIB'
+
+relationship 05b34f87-20c5-8bb1-bf29-a7b3ab0667e9
+	fromColumn: 'IPCA Mensal por Setor'.'Data IPCA Gp'
+	toColumn: 'Calendário Mensal'.Data
+
+relationship 042a6b4a-71f8-1f00-331c-02442626fd6e
+	fromColumn: 'IDHM Demográfico (1970-2021)'.'Data IDHM'
+	toColumn: 'Calendário Mensal'.Data
+
+relationship 240c1d3a-cba9-6579-dd6c-bd9f221623c4
+	fromColumn: 'Rendimento Médio Mensal por Setor'.'Data Rendimento'
+	toColumn: 'Calendário Mensal'.Data
+
+relationship cd59729c-b3fe-46d0-bc18-495c893c1658
+	fromColumn: 'IDHM Demográfico (1970-2021)'.'Cd Município IDHM'
+	toColumn: 'Metadados dos Territórios (IDHM)'.'Cd Município'
+
+relationship c77f9acc-46d9-f46c-0cd1-612863b75b98
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Metadados dos Territórios (IDHM)'.'Cd Município'
+	toColumn: municipios.codigo_ibge
+
+relationship ce687b47-cd7f-27d2-9615-b189d5e5f402
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'IPCA Mensal por Setor'.'Data IPCA Gp'
+	toColumn: 'IPCA Geral Mensal (Taxa de Variação)'.'Data IPCA'
+
+relationship e7cc80b8-6e32-1525-fd23-c412682f6bdb
+	isActive: false
+	fromColumn: 'IDHM Demográfico (1970-2021)'.'Data IDHM'
+	toColumn: 'IPCA Geral Mensal (Taxa de Variação)'.'Data IPCA'
+

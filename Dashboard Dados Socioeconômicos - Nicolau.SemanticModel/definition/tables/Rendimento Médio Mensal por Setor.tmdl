@@ -1,0 +1,58 @@
+table 'Rendimento Médio Mensal por Setor'
+	lineageTag: 6095a2cf-0b0a-45f3-bc8d-4cecc9628d48
+
+	column 'Valor Rendimento'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7e4da687-6ae9-451e-bc20-be0cafd99463
+		summarizeBy: average
+		sourceColumn: Valor Rendimento
+
+		annotation SummarizationSetBy = User
+
+	column 'Rendimento Gp'
+		dataType: string
+		lineageTag: d6a0546b-c6ce-46df-bf31-2f0ac2a6ec5b
+		summarizeBy: none
+		sourceColumn: Rendimento Gp
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Rendimento'
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: e5698c85-3533-43fa-9750-786ddace73da
+		summarizeBy: none
+		sourceColumn: Data Rendimento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition 'Rendimento Médio Mensal por Setor' = m
+		mode: import
+		source =
+				let
+				    Source = Json.Document(Web.Contents("https://servicodados.ibge.gov.br/api/v3/agregados/4662/variaveis/5932?classificacao=888[all]&view=flat&localidades=BR")),
+				    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", {"NC", "NN", "MC", "MN", "V", "D1C", "D1N", "D2C", "D2N", "D3C", "D3N", "D4C", "D4N"}, {"NC", "NN", "MC", "MN", "V", "D1C", "D1N", "D2C", "D2N", "D3C", "D3N", "D4C", "D4N"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Expanded Column1", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nível Territorial (Código)", Int64.Type}, {"Nível Territorial", type text}, {"Unidade de Medida (Código)", Int64.Type}, {"Unidade de Medida", type text}, {"Valor", Int64.Type}, {"Brasil (Código)", Int64.Type}, {"Brasil", type text}, {"Ano (Código)", Int64.Type}, {"Ano", Int64.Type}, {"Variável (Código)", Int64.Type}, {"Variável", type text}, {"Grupamento de atividade no trabalho principal (Código)", Int64.Type}, {"Grupamento de atividade no trabalho principal", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"Grupamento de atividade no trabalho principal", "Ano", "Valor"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Other Columns",{"Ano", "Valor", "Grupamento de atividade no trabalho principal"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns",{{"Grupamento de atividade no trabalho principal", type text}, {"Ano", type text}, {"Valor", type number}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type1",{{"Valor", each Number.Round(_, 2), type number}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Rounded Off", "Ano", "Ano - Copy"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Ano - Copy", type date}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Changed Type2",{"Ano - Copy", "Ano", "Valor", "Grupamento de atividade no trabalho principal"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns1",{"Ano"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Ano - Copy", "Data Rendimento"}, {"Valor", "Valor Rendimento"}, {"Grupamento de atividade no trabalho principal", "Rendimento Gp"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

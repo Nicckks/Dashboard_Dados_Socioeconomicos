@@ -1,0 +1,34 @@
+table 'Calendário Mensal'
+	lineageTag: 8c81fdb0-320b-4ac0-9f72-2a7e080f8d75
+
+	column Data
+		formatString: dd/mm/yyyy
+		lineageTag: 1295e15c-9820-455a-a49b-81dffb9c9467
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Ano = YEAR('Calendário Mensal'[Data])
+		formatString: 0
+		lineageTag: 2f6ac6f1-da40-421a-b2c2-af96fb34be68
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Calendário Mensal' = calculated
+		mode: import
+		source =
+				
+				VAR DataInicial = DATE(1960, 1, 1)
+				VAR Hoje = TODAY()
+				RETURN
+				    FILTER(
+				        CALENDAR(DataInicial, Hoje),
+				        DAY([Date]) = 1
+				    )
+
+	annotation PBI_Id = 1dc343dc666d455f89660d8656fbc955
+

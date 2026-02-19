@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["IPCA Geral Mensal (Taxa de Variação)","IPCA Mensal por Setor","Ibovespa Mensal (Fechamento)","PIB Mensal","IDHM Demográfico (1970-2021)","Metadados dos Territórios (IDHM)","Rendimento Médio Mensal por Setor","municipios"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'IPCA Geral Mensal (Taxa de Variação)'
+ref table DateTableTemplate_fba4cb20-9662-4590-904b-401a527cdaaa
+ref table 'Ibovespa Mensal (Fechamento)'
+ref table LocalDateTable_30a163e8-6840-4f7c-b64b-0350a6a74279
+ref table LocalDateTable_a12f93fb-1ce8-4751-845f-b7f8ab4b75d8
+ref table 'Calendário Mensal'
+ref table 'PIB Mensal'
+ref table LocalDateTable_c2306d03-7106-48ae-962b-2c2d7ac07878
+ref table 'IDHM Demográfico (1970-2021)'
+ref table 'Metadados dos Territórios (IDHM)'
+ref table 'IPCA Mensal por Setor'
+ref table 'Rendimento Médio Mensal por Setor'
+ref table municipios
+ref table Medidas
+
+ref cultureInfo en-US
+

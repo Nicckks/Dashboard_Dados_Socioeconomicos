@@ -1,0 +1,46 @@
+table 'Ibovespa Mensal (Fechamento)'
+	lineageTag: 368dc6dd-b8a0-4623-a6f4-8a4d685ca8c7
+
+	column 'Data IBOVESPA'
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 090a4553-6a0b-4d0a-9e0f-4558bb41e543
+		summarizeBy: none
+		sourceColumn: Data IBOVESPA
+
+		variation Variation
+			isDefault
+			relationship: 8865285b-5e66-4fa0-bdbd-888909255174
+			defaultHierarchy: LocalDateTable_30a163e8-6840-4f7c-b64b-0350a6a74279.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Valor IBOVESPA'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 830eb560-7a76-4392-b42e-c006bd930e66
+		summarizeBy: average
+		sourceColumn: Valor IBOVESPA
+
+		annotation SummarizationSetBy = User
+
+	partition 'Ibovespa Mensal (Fechamento)' = m
+		mode: import
+		source =
+				let
+				    Source = OData.Feed("http://www.ipeadata.gov.br/api/odata4/Metadados('ANBIMA12_IBVSP12')/Valores", null, [Implementation="2.0"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"VALDATA", "VALVALOR"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"VALDATA", type date}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type",{{"VALVALOR", each Number.Round(_, 2), type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Rounded Off",{{"VALDATA", "Data IBOVESPA"}, {"VALVALOR", "Valor IBOVESPA"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

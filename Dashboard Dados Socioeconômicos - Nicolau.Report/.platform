@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Dashboard Dados Socioeconômicos - Nicolau"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ec8f4801-f4e9-4a5a-8672-99d4a6316074"
+  }
+}

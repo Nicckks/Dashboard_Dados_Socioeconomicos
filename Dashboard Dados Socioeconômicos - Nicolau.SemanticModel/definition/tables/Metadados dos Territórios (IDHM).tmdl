@@ -1,0 +1,40 @@
+table 'Metadados dos Territórios (IDHM)'
+	lineageTag: 18c58c9a-5a01-46be-b18b-02cd8a055ff4
+
+	column 'Cd Município'
+		dataType: int64
+		formatString: 0
+		lineageTag: ce0324a0-8c04-40ba-9ea6-d21aa5cb3937
+		summarizeBy: none
+		sourceColumn: Cd Município
+
+		annotation SummarizationSetBy = User
+
+	column 'Nome Município'
+		dataType: string
+		lineageTag: ebd2a4c2-3af7-45ea-a214-461661455855
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: Nome Município
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Metadados dos Territórios (IDHM)' = m
+		mode: import
+		source =
+				let
+				    Source = OData.Feed("http://www.ipeadata.gov.br/api/odata4/Territorios", null, [Implementation="2.0"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"NIVNOME", "TERCODIGO", "TERNOME"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([NIVNOME] = "Municípios")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"NIVNOME", type text}, {"TERCODIGO", Int64.Type}, {"TERNOME", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"NIVNOME"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"TERCODIGO", "Cd Município"}, {"TERNOME", "Nome Município"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each ([Cd Município] <> 2200053 and [Cd Município] <> 2200202 and [Cd Município] <> 2200277 and [Cd Município] <> 2200400 and [Cd Município] <> 2200459 and [Cd Município] <> 2200509 and [Cd Município] <> 2200608 and [Cd Município] <> 2200707 and [Cd Município] <> 2200806 and [Cd Município] <> 2200905 and [Cd Município] <> 2200954 and [Cd Município] <> 2202000 and [Cd Município] <> 2202026 and [Cd Município] <> 2202059 and [Cd Município] <> 2202075 and [Cd Município] <> 2202083 and [Cd Município] <> 2202208 and [Cd Município] <> 2202307 and [Cd Município] <> 2202406 and [Cd Município] <> 2202455 and [Cd Município] <> 2202505 and [Cd Município] <> 2202539 and [Cd Município] <> 2202554 and [Cd Município] <> 2202604 and [Cd Município] <> 2202653 and [Cd Município] <> 2202703 and [Cd Município] <> 2202729 and [Cd Município] <> 2202737 and [Cd Município] <> 2202752 and [Cd Município] <> 2202778 and [Cd Município] <> 2202802 and [Cd Município] <> 2203008 and [Cd Município] <> 2203206 and [Cd Município] <> 2203230 and [Cd Município] <> 2203255 and [Cd Município] <> 2203305 and [Cd Município] <> 2203354 and [Cd Município] <> 2203404 and [Cd Município] <> 2203420 and [Cd Município] <> 2203453 and [Cd Município] <> 2203503 and [Cd Município] <> 2203602 and [Cd Município] <> 2203750 and [Cd Município] <> 2203800 and [Cd Município] <> 2203859 and [Cd Município] <> 2203909 and [Cd Município] <> 2204006 and [Cd Município] <> 2204204 and [Cd Município] <> 2204303 and [Cd Município] <> 2204352 and [Cd Município] <> 2204402 and [Cd Município] <> 2204550 and [Cd Município] <> 2204600 and [Cd Município] <> 2204659 and [Cd Município] <> 2204709 and [Cd Município] <> 2204808 and [Cd Município] <> 2204907 and [Cd Município] <> 2205003 and [Cd Município] <> 2205250 and [Cd Município] <> 2205276 and [Cd Município] <> 2205300 and [Cd Município] <> 2205359 and [Cd Município] <> 2205409 and [Cd Município] <> 2205458 and [Cd Município] <> 2205508 and [Cd Município] <> 2205524 and [Cd Município] <> 2205532 and [Cd Município] <> 2205540 and [Cd Município] <> 2205557 and [Cd Município] <> 2205565 and [Cd Município] <> 2205573 and [Cd Município] <> 2205599 and [Cd Município] <> 2205607 and [Cd Município] <> 2205706 and [Cd Município] <> 2205805 and [Cd Município] <> 2205854 and [Cd Município] <> 2205904 and [Cd Município] <> 2205953 and [Cd Município] <> 2206050 and [Cd Município] <> 2206209 and [Cd Município] <> 2206308 and [Cd Município] <> 2206357 and [Cd Município] <> 2206407 and [Cd Município] <> 2206506 and [Cd Município] <> 2206605 and [Cd Município] <> 2206654 and [Cd Município] <> 2206670 and [Cd Município] <> 2206696 and [Cd Município] <> 2206704 and [Cd Município] <> 2206720 and [Cd Município] <> 2206753 and [Cd Município] <> 2206803 and [Cd Município] <> 2206902 and [Cd Município] <> 2207009 and [Cd Município] <> 2207207 and [Cd Município] <> 2207306 and [Cd Município] <> 2207355 and [Cd Município] <> 2207405 and [Cd Município] <> 2207504 and [Cd Município] <> 2207553 and [Cd Município] <> 2207603 and [Cd Município] <> 2207702 and [Cd Município] <> 2207777 and [Cd Município] <> 2207793 and [Cd Município] <> 2207850 and [Cd Município] <> 2207900 and [Cd Município] <> 2207934 and [Cd Município] <> 2207959 and [Cd Município] <> 2208007 and [Cd Município] <> 2208205 and [Cd Município] <> 2208304 and [Cd Município] <> 2208403 and [Cd Município] <> 2208502 and [Cd Município] <> 2208650 and [Cd Município] <> 2208700 and [Cd Município] <> 2208809 and [Cd Município] <> 2208858 and [Cd Município] <> 2208874 and [Cd Município] <> 2208908 and [Cd Município] <> 2209005 and [Cd Município] <> 2209203 and [Cd Município] <> 2209302 and [Cd Município] <> 2209377 and [Cd Município] <> 2209450 and [Cd Município] <> 2209500 and [Cd Município] <> 2209559 and [Cd Município] <> 2209609 and [Cd Município] <> 2209658 and [Cd Município] <> 2209708 and [Cd Município] <> 2209757 and [Cd Município] <> 2209807 and [Cd Município] <> 2209856 and [Cd Município] <> 2209872 and [Cd Município] <> 2209906 and [Cd Município] <> 2209955 and [Cd Município] <> 2300200 and [Cd Município] <> 2300309 and [Cd Município] <> 2300408 and [Cd Município] <> 2300507 and [Cd Município] <> 2300606 and [Cd Município] <> 2300705 and [Cd Município] <> 2300754 and [Cd Município] <> 2300804 and [Cd Município] <> 2300903 and [Cd Município] <> 2302008 and [Cd Município] <> 2302057 and [Cd Município] <> 2302206 and [Cd Município] <> 2302305 and [Cd Município] <> 2302404 and [Cd Município] <> 2302503 and [Cd Município] <> 2302602 and [Cd Município] <> 2302800 and [Cd Município] <> 2302909 and [Cd Município] <> 2303006 and [Cd Município] <> 2303204 and [Cd Município] <> 2303303 and [Cd Município] <> 2303402 and [Cd Município] <> 2303600 and [Cd Município] <> 2303659 and [Cd Município] <> 2303709 and [Cd Município] <> 2303808 and [Cd Município] <> 2303907 and [Cd Município] <> 2303956 and [Cd Município] <> 2304004 and [Cd Município] <> 2304202 and [Cd Município] <> 2304236 and [Cd Município] <> 2304269 and [Cd Município] <> 2304277 and [Cd Município] <> 2304285 and [Cd Município] <> 2304350 and [Cd Município] <> 2304400 and [Cd Município] <> 2304459 and [Cd Município] <> 2304509 and [Cd Município] <> 2304608 and [Cd Município] <> 2304657 and [Cd Município] <> 2304707 and [Cd Município] <> 2304806 and [Cd Município] <> 2304905 and [Cd Município] <> 2304954 and [Cd Município] <> 2305209 and [Cd Município] <> 2305233 and [Cd Município] <> 2305266 and [Cd Município] <> 2305308 and [Cd Município] <> 2305332 and [Cd Município] <> 2305357 and [Cd Município] <> 2305407 and [Cd Município] <> 2305506 and [Cd Município] <> 2305605 and [Cd Município] <> 2305654 and [Cd Município] <> 2305704 and [Cd Município] <> 2305803 and [Cd Município] <> 2305902 and [Cd Município] <> 2306009 and [Cd Município] <> 2306207 and [Cd Município] <> 2306256 and [Cd Município] <> 2306306 and [Cd Município] <> 2306405 and [Cd Município] <> 2306504 and [Cd Município] <> 2306553 and [Cd Município] <> 2306603 and [Cd Município] <> 2306702 and [Cd Município] <> 2306900 and [Cd Município] <> 2307007 and [Cd Município] <> 2307205 and [Cd Município] <> 2307254 and [Cd Município] <> 2307304 and [Cd Município] <> 2307403 and [Cd Município] <> 2307502 and [Cd Município] <> 2307635 and [Cd Município] <> 2307650 and [Cd Município] <> 2307700 and [Cd Município] <> 2307809 and [Cd Município] <> 2307908)),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each [Nome Município] <> null and [Nome Município] <> "")
+				in
+				    #"Filtered Rows2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

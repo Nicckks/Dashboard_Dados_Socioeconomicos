@@ -1,0 +1,46 @@
+table 'IPCA Geral Mensal (Taxa de Variação)'
+	lineageTag: 5750464a-fcf5-449a-b525-0f51b45ba5f3
+
+	column 'Data IPCA'
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: dbd8d67a-9f82-4d84-82ce-fdabc847b1cc
+		summarizeBy: none
+		sourceColumn: Data IPCA
+
+		variation Variation
+			isDefault
+			relationship: ba10a862-0d4d-4228-8a92-65d251e683a1
+			defaultHierarchy: LocalDateTable_a12f93fb-1ce8-4751-845f-b7f8ab4b75d8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Valor IPCA'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 51e6ca42-7279-4656-94ed-edd8c7c707fc
+		summarizeBy: average
+		sourceColumn: Valor IPCA
+
+		annotation SummarizationSetBy = User
+
+	partition 'IPCA Geral Mensal (Taxa de Variação)' = m
+		mode: import
+		source =
+				let
+				    Source = OData.Feed("http://www.ipeadata.gov.br/api/odata4/Metadados('PRECOS12_IPCAG12')/Valores", null, [Implementation="2.0"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"VALDATA", "VALVALOR"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"VALDATA", type date}}),
+				    #"Rounded Off" = Table.TransformColumns(#"Changed Type",{{"VALVALOR", each Number.Round(_, 2), type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Rounded Off",{{"VALDATA", "Data IPCA"}, {"VALVALOR", "Valor IPCA"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
