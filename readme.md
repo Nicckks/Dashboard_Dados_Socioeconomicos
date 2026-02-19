@@ -2,6 +2,16 @@
 
 Este repositório contém informações extraídas de um **dashboard socioeconômico** que reúne **indicadores macroeconômicos**, **índices de mercado** e dados de **desenvolvimento humano** por município.
 
+---
+
+# 📷 Prints do Dashboard
+- Os prints das visualizações do Dashboard também se encontram na pasta /images
+
+<img src="Images/Page1.png" alt="Page One" width="500" height="320">
+<img src="Images/Page2.png" alt="Page Two" width="500" height="320">
+<img src="Images/Page3.png" alt="Page Three" width="500" height="320">
+<img src="Images/Page4.png" alt="Page Four" width="500" height="320">
+
 --- 
 
 # 📊 Indicadores Econômicos
@@ -48,24 +58,6 @@ Média geral: **0,535**
 **Média de IDH por Ano:** Dados disponíveis entre 2012 e 2020.
 **Média de IPCA por Data:** Séries mensais entre setembro de 2024 e fevereiro de 2025.
 **Média de Rendimento por Data e Grupo:** Valores médios de rendimento por setores econômicos entre 2019 e 2024.
-
----
-
-# 📷 Prints do Dashboard
-- Os prints das visualizações do Dashboard também se encontram na pasta /images
-
-<Style>
-    .imgDashboard{
-        display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; 
-        margin-bottom: 10px;
-    }
-</Style>
-<div class = "imgDashboard">
-<img src="Images/Page1.png" alt="Page One" width="500" height="320">
-<img src="Images/Page2.png" alt="Page Two" width="500" height="320">
-<img src="Images/Page3.png" alt="Page Three" width="500" height="320">
-<img src="Images/Page4.png" alt="Page Four" width="500" height="320">
-</div>
 
 ---
 
