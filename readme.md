@@ -1,4 +1,4 @@
-# Dashboard Dados Socioeconômicos
+# 🖥️ Dashboard Dados Socioeconômicos
 
 Este repositório contém informações extraídas de um **dashboard socioeconômico** que reúne **indicadores macroeconômicos**, **índices de mercado** e dados de **desenvolvimento humano** por município.
 
